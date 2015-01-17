@@ -34,7 +34,7 @@ trait RuntimeEnvironment[U] {
   val idGenerator: IdGenerator
   val authenticatorService: AuthenticatorService[U]
 
-  val eventListeners: List[EventListener[U]]
+  def eventListeners: Seq[EventListener[U]]
 
   val userService: UserService[U]
 
@@ -68,7 +68,7 @@ object RuntimeEnvironment {
       new HttpHeaderAuthenticatorBuilder[U](new AuthenticatorStore.Default(cacheService), idGenerator)
     )
 
-    override lazy val eventListeners: List[EventListener[U]] = List()
+    override def eventListeners: Seq[EventListener[U]] = Seq()
     override implicit def executionContext: ExecutionContext =
       PlayExecution.defaultContext
 
